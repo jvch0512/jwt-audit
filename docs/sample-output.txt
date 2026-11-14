@@ -1,0 +1,25 @@
+7 tokens, 12 findings
+CRITICAL JWT001 line 2 (alg=none)
+         no signature algorithm: any token can be forged
+HIGH     JWT002 line 4 (alg=RS256)
+         'jku' header lets the token point at its own verification key; ignore it and use a fixed key set
+HIGH     JWT003 line 4 (alg=RS256)
+         'kid' contains path, SQL or shell characters: classic injection vector
+HIGH     JWT004 line 5 (alg=ES256)
+         no 'exp' claim: the token never expires
+HIGH     JWT008 line 5 (alg=ES256)
+         payload is readable by anyone and contains claim names that look like secrets: api_key, password_hash
+MEDIUM   JWT005 line 2 (alg=none)
+         lifetime of 1.0 days: prefer minutes or hours with a refresh token
+MEDIUM   JWT007 line 2 (alg=none)
+         missing aud and iss: a token for another service or issuer would be accepted
+MEDIUM   JWT005 line 3 (alg=HS256)
+         lifetime of 8.1 days: prefer minutes or hours with a refresh token
+MEDIUM   JWT006 line 3 (alg=HS256)
+         HS256 uses a shared secret: weak secrets can be brute forced offline, and RSA keys must never be accepted as HMAC secrets
+MEDIUM   JWT007 line 5 (alg=ES256)
+         missing aud and iss: a token for another service or issuer would be accepted
+MEDIUM   JWT005 line 6 (alg=RS256)
+         expired 3600 seconds before --now
+INFO     JWT009 line 7
+         header could not be decoded: not utf-8

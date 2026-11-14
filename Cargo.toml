@@ -1,0 +1,13 @@
+[package]
+name = "jwt-audit"
+version = "1.0.0"
+edition = "2021"
+description = "Audit JSON Web Tokens: alg none, key injection headers, missing expiry, secrets in claims"
+license = "MIT"
+repository = "https://github.com/jvch0512/jwt-audit"
+keywords = ["security", "jwt", "appsec", "audit"]
+
+[dependencies]
+
+[profile.release]
+opt-level = 3
