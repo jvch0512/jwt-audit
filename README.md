@@ -2,6 +2,8 @@
 
 jwt-audit decodes JWTs (it does not verify signatures) and flags the mistakes that turn tokens into vulnerabilities: `alg: none`, `jku`, `x5u` and embedded `jwk` headers that let an attacker choose the verification key, suspicious `kid` values, tokens that never expire or live for weeks, missing audience and issuer, and sensitive data stored in the payload. Token values and claim values are never printed.
 
+![Terminal demo of jwt-audit on its sample data](docs/demo.svg)
+
 **Live demo:** https://jvch0512.github.io/jwt-audit/ (Tokens built from invented claims and a fake signature.)
 
 Rust 2021, no dependencies. The demo page is rendered from the tool's `--tsv` output by `scripts/site.py` (Python 3, only needed to regenerate the page).
@@ -49,3 +51,13 @@ cargo test --release    # 16 integration tests
 ```
 
 MIT.
+
+## Code scanning (SARIF)
+
+`scripts/tsv2sarif.py` converts the `--tsv` output into SARIF 2.1.0, so findings show up in GitHub code scanning:
+
+```sh
+./target/release/jwt-audit examples/tokens.txt --now 1763100000 --tsv | python3 scripts/tsv2sarif.py --tool jwt-audit --prefix examples > results.sarif
+```
+
+Upload `results.sarif` with `github/codeql-action/upload-sarif`. Severities map to SARIF levels (critical and high to error, medium to warning, low and info to note) and to a `security-severity` score.
